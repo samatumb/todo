@@ -5,6 +5,6 @@ import 'auth_repository.dart';
 
 void main() {
   configureDependencies();
-  //getIt.registerSingleton<AuthRepository>(SupabaseAuth());
+  getIt.registerSingleton<AuthRepository>(SupabaseAuth());
   runApp(const TodoApp());
 }

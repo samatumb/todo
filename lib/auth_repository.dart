@@ -40,11 +40,10 @@ class SupabaseAuth implements AuthRepository {
 class FirebaseAuth implements AuthRepository {
   @override
   Future<String> testString() {
-    Future.delayed(
+    return Future.delayed(
       const Duration(seconds: 1),
       () => 'Test FirebaseAuth'
     );
-    throw UnimplementedError();
   }
 
   @override
