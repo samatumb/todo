@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
   
   final String title;
   final TextEditingController _controller = TextEditingController();
-  //int? _editingTodoIndex;
+  final _formKey = GlobalKey<FormState>();
   
   @override
   Widget build(BuildContext context) {
@@ -49,6 +49,7 @@ class HomePage extends StatelessWidget {
             children: <Widget>[
               TodoTextField(
                 controller: _controller,
+                formKey: _formKey,
               ),
               ElevatedButton(
               style: TextButton.styleFrom(
@@ -56,7 +57,7 @@ class HomePage extends StatelessWidget {
                 foregroundColor: Colors.white
               ),
               onPressed: () {
-                if (_controller.text.isNotEmpty) {
+                if (_formKey.currentState!.validate()) {
                   if (state.editingTodoIndex != null) {
                     Todo temp = state.todos[state.editingTodoIndex!];
                     temp.name = _controller.text;
