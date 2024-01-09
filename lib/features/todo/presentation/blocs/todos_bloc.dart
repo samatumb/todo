@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'todo.dart';
+import '../../data/dtos/todo.dart';
 
 sealed class TodoEvent {
   TodoEvent(this.todo);

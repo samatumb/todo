@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../bloc/todo.dart';
+import '../../data/dtos/todo.dart';
 
 class TodoItem extends StatelessWidget {
   TodoItem({required this.todo, required this.editTodoTapped, required this.removeTodoTapped}) : super(key: ObjectKey(todo));

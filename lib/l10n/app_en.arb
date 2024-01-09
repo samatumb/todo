@@ -1,0 +1,7 @@
+{
+    "appTitle": "Tasks",
+    "edit": "Edit",
+    "add": "Add",
+    "hint": "Enter new task",
+    "emptyField": "Task name cant be emty"
+}
