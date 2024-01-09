@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
 class TodoTextField extends StatefulWidget {
-  const TodoTextField({super.key, required this.controller, required this.formKey});
+  const TodoTextField({
+    super.key,
+    required this.controller,
+    required this.formKey,
+    required this.hintText,
+    required this.emptyFieldText
+    });
   final TextEditingController controller;
   final GlobalKey<FormState> formKey;
+  final String hintText;
+  final String emptyFieldText;
 
   @override
   State<TodoTextField> createState() => _TodoTextFieldState();
@@ -22,7 +30,7 @@ class _TodoTextFieldState extends State<TodoTextField> {
             child: TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'Введите текст задачи';
+                  return widget.emptyFieldText;
                 }
                 return null;
               },
@@ -38,7 +46,7 @@ class _TodoTextFieldState extends State<TodoTextField> {
                       icon: const Icon(Icons.clear)
                     )
                   : null, 
-                hintText: 'Новая задача',
+                hintText: widget.hintText,
               ),
               onChanged: (text) {
                 setState(() {});

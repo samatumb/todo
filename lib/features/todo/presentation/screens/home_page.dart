@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/common/extensions/locale_context_ext.dart';
+import 'package:todo/features/todo/presentation/blocs/locale_bloc.dart';
 import 'package:todo/features/todo/presentation/blocs/todos_bloc.dart';
 import '../../data/dtos/todo.dart';
 import '../widgets/todo_text_field.dart';
@@ -7,42 +9,35 @@ import '../widgets/todo_item.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../di/injector.dart';
 
-class TodoApp extends StatelessWidget {
-  const TodoApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TodoApp',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
-      home: BlocProvider(
-        create: (_) => TodosBloc(),
-        child: HomePage(title: 'Задачи'),
-      ),
-    );
-  }
-}
-
 class HomePage extends StatelessWidget {
-  HomePage({super.key, required this.title});
+  HomePage({super.key});
   
-  final String title;
   final TextEditingController _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext widgetContext) {
     return MaterialApp(
-      title: 'TodoApp',
+      title: 'Todo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(title)
-          ),
+          backgroundColor: Theme.of(widgetContext).colorScheme.inversePrimary,
+          title: Text(widgetContext.loc.appTitle),
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (Localizations.localeOf(widgetContext).languageCode == 'en') {
+                  widgetContext.read<LocaleBloc>().add(SetLocaleEvent(Locale('ru')));
+                } else {
+                  widgetContext.read<LocaleBloc>().add(SetLocaleEvent(Locale('en')));
+                }
+                
+              },
+              child: Text(Localizations.localeOf(widgetContext).languageCode == 'en' ? 'ru' : 'en')
+            )
+          ]
+        ),
         body: BlocBuilder<TodosBloc, TodosState>(
           builder: (context, state) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -50,6 +45,8 @@ class HomePage extends StatelessWidget {
               TodoTextField(
                 controller: _controller,
                 formKey: _formKey,
+                hintText: widgetContext.loc.hint,
+                emptyFieldText: widgetContext.loc.emptyField,
               ),
               ElevatedButton(
               style: TextButton.styleFrom(
@@ -70,7 +67,7 @@ class HomePage extends StatelessWidget {
                   _checkTestDI();
                 }
               }, 
-              child: state.editingTodoIndex != null ? const Text('Изменить') : const Text('Добавить')
+              child: state.editingTodoIndex != null ? Text(widgetContext.loc.add) : Text(widgetContext.loc.add)
             ),
               Expanded(
                 child: ListView.separated(
