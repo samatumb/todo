@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
 class TodoTextField extends StatefulWidget {
-  const TodoTextField({
-    super.key,
-    required this.controller,
-    required this.formKey,
-    required this.hintText,
-    required this.emptyFieldText
-    });
+  const TodoTextField(
+      {super.key,
+      required this.controller,
+      required this.formKey,
+      required this.hintText,
+      required this.emptyFieldText});
   final TextEditingController controller;
   final GlobalKey<FormState> formKey;
   final String hintText;
@@ -38,21 +37,20 @@ class _TodoTextFieldState extends State<TodoTextField> {
               decoration: InputDecoration(
                 border: const OutlineInputBorder(),
                 suffixIcon: widget.controller.text.isNotEmpty
-                  ? IconButton(
-                      onPressed: () {
-                        widget.controller.clear();
-                        setState(() {});
-                      },
-                      icon: const Icon(Icons.clear)
-                    )
-                  : null, 
+                    ? IconButton(
+                        onPressed: () {
+                          widget.controller.clear();
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.clear))
+                    : null,
                 hintText: widget.hintText,
               ),
               onChanged: (text) {
                 setState(() {});
               },
             ),
-           ),
+          ),
         ],
       ),
     );

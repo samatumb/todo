@@ -20,11 +20,10 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => getIt<LocaleBloc>()),
-      ], 
-      child: BlocBuilder<LocaleBloc, Locale>(
-        builder: (context, locale) {
+        providers: [
+          BlocProvider(create: (_) => getIt<LocaleBloc>()),
+        ],
+        child: BlocBuilder<LocaleBloc, Locale>(builder: (context, locale) {
           return MaterialApp(
             title: 'TodoApp',
             theme: ThemeData(
@@ -39,9 +38,6 @@ class TodoApp extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             locale: locale,
           );
-        }
-      )
-    );
-    
+        }));
   }
 }

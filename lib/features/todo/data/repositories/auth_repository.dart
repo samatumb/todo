@@ -8,13 +8,11 @@ abstract class AuthRepository {
 }
 
 @Injectable(as: AuthRepository)
-class SupabaseAuth implements AuthRepository { 
+class SupabaseAuth implements AuthRepository {
   @override
   Future<String> testString() {
     return Future.delayed(
-      const Duration(seconds: 1),
-      () => 'Test SupabaseAuth'
-    );
+        const Duration(seconds: 1), () => 'Test SupabaseAuth');
   }
 
   @override
@@ -41,9 +39,7 @@ class FirebaseAuth implements AuthRepository {
   @override
   Future<String> testString() {
     return Future.delayed(
-      const Duration(seconds: 1),
-      () => 'Test FirebaseAuth'
-    );
+        const Duration(seconds: 1), () => 'Test FirebaseAuth');
   }
 
   @override

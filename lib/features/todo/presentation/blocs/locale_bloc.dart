@@ -14,14 +14,11 @@ final class SetLocaleEvent extends LocaleEvent {
 @injectable
 class LocaleBloc extends Bloc<LocaleEvent, Locale> {
   LocaleBloc() : super(const Locale('en')) {
-    on<LocaleEvent>((event, emitter) => switch (event) {
-      SetLocaleEvent() => _setLocale(event, emitter)
-    });
+    on<LocaleEvent>((event, emitter) =>
+        switch (event) { SetLocaleEvent() => _setLocale(event, emitter) });
   }
 
   _setLocale(SetLocaleEvent event, Emitter<Locale> emitter) {
     emitter(event.locale);
   }
 }
-
-

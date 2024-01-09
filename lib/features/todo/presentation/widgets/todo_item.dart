@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import '../../data/dtos/todo.dart';
 
 class TodoItem extends StatelessWidget {
-  TodoItem({required this.todo, required this.editTodoTapped, required this.removeTodoTapped}) : super(key: ObjectKey(todo));
+  TodoItem(
+      {required this.todo,
+      required this.editTodoTapped,
+      required this.removeTodoTapped})
+      : super(key: ObjectKey(todo));
 
   final Todo todo;
   final Function() editTodoTapped;
@@ -41,7 +45,6 @@ class TodoItem extends StatelessWidget {
           icon: const Icon(
             Icons.delete,
             color: Colors.red,
-            
           ),
           alignment: Alignment.centerRight,
           onPressed: () {
