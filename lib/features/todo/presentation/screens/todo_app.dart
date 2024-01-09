@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todo/bloc/todos_bloc.dart';
-import '../bloc/todo.dart';
-import 'todo_text_field.dart';
-import 'todo_item.dart';
-import '../auth_repository.dart';
-import '../di/injector.dart';
+import 'package:todo/features/todo/presentation/blocs/todos_bloc.dart';
+import '../../data/dtos/todo.dart';
+import '../widgets/todo_text_field.dart';
+import '../widgets/todo_item.dart';
+import '../../data/repositories/auth_repository.dart';
+import '../../di/injector.dart';
 
 class TodoApp extends StatelessWidget {
   const TodoApp({super.key});
