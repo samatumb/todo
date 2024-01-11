@@ -16,42 +16,41 @@ class HomePage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext widgetContext) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         appBar: AppBar(
-            backgroundColor: Theme.of(widgetContext).colorScheme.inversePrimary,
-            title: Text(widgetContext.loc.appTitle),
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(context.loc.appTitle),
             actions: [
               TextButton(
                   onPressed: () {
-                    if (Localizations.localeOf(widgetContext).languageCode ==
-                        'en') {
-                      widgetContext
+                    if (Localizations.localeOf(context).languageCode == 'en') {
+                      context
                           .read<LocaleBloc>()
-                          .add(SetLocaleEvent(Locale('ru')));
+                          .add(SetLocaleEvent(const Locale('ru')));
                     } else {
-                      widgetContext
+                      context
                           .read<LocaleBloc>()
-                          .add(SetLocaleEvent(Locale('en')));
+                          .add(SetLocaleEvent(const Locale('en')));
                     }
                   },
                   child: Text(
-                      Localizations.localeOf(widgetContext).languageCode == 'en'
+                      Localizations.localeOf(context).languageCode == 'en'
                           ? 'ru'
                           : 'en'))
             ]),
         body: BlocBuilder<TodosBloc, TodosState>(
-            builder: (context, state) => Column(
+            builder: (blocContext, state) => Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TodoTextField(
                       controller: _controller,
                       formKey: _formKey,
-                      hintText: widgetContext.loc.hint,
-                      emptyFieldText: widgetContext.loc.emptyField,
+                      hintText: context.loc.hint,
+                      emptyFieldText: context.loc.emptyField,
                     ),
                     ElevatedButton(
                         style: TextButton.styleFrom(
@@ -73,8 +72,8 @@ class HomePage extends StatelessWidget {
                           }
                         },
                         child: state.editingTodoIndex != null
-                            ? Text(widgetContext.loc.add)
-                            : Text(widgetContext.loc.add)),
+                            ? Text(context.loc.add)
+                            : Text(context.loc.add)),
                     Expanded(
                       child: ListView.separated(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
