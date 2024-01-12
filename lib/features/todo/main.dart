@@ -13,6 +13,7 @@ void main() async {
   await setLanguage();
   getIt.registerSingleton<AuthRepository>(SupabaseAuth());
   getIt.registerSingleton<LocaleBloc>(LocaleBloc.create());
+  getIt.registerSingleton<TodosBloc>(TodosBloc());
   runApp(const TodoApp());
 }
 
@@ -33,6 +34,7 @@ class TodoApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => getIt<LocaleBloc>()),
+          BlocProvider(create: (_) => getIt<TodosBloc>())
         ],
         child: BlocBuilder<LocaleBloc, Locale>(builder: (context, locale) {
           return MaterialApp(
@@ -41,10 +43,9 @@ class TodoApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
               useMaterial3: true,
             ),
-            home: BlocProvider(
-              create: (_) => TodosBloc(),
-              child: HomePage(),
-            ),
+            home: BlocBuilder<TodosBloc, TodosState>(builder: (context, state) {
+              return  HomePage(state: state);
+            }),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: locale,

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import '../../data/dtos/todo.dart';
 
 sealed class TodoEvent {
@@ -28,6 +29,7 @@ final class TodosState {
   final int? editingTodoIndex;
 }
 
+@injectable
 class TodosBloc extends Bloc<TodoEvent, TodosState> {
   TodosBloc() : super(TodosState([], null)) {
     on<TodoAdded>((event, emit) {
