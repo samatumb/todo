@@ -10,10 +10,11 @@ import '../../data/repositories/auth_repository.dart';
 import '../../di/injector.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  HomePage({required this.state}) : super(key: ObjectKey(state));
 
   final TextEditingController _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final TodosState state;
 
   @override
   Widget build(BuildContext context) {
@@ -42,64 +43,64 @@ class HomePage extends StatelessWidget {
                           ? 'ru'
                           : 'en'))
             ]),
-        body: BlocBuilder<TodosBloc, TodosState>(
-            builder: (blocContext, state) => Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    TodoTextField(
-                      controller: _controller,
-                      formKey: _formKey,
-                      hintText: context.loc.hint,
-                      emptyFieldText: context.loc.emptyField,
-                    ),
-                    ElevatedButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            if (state.editingTodoIndex != null) {
-                              Todo temp = state.todos[state.editingTodoIndex!];
-                              temp.name = _controller.text;
-                              context.read<TodosBloc>().add(TodoEdited(temp));
-                              _controller.clear();
-                            } else {
-                              context.read<TodosBloc>().add(TodoAdded(Todo(
-                                  name: _controller.text, completed: false)));
-                              _controller.clear();
-                            }
-                            _checkTestDI();
+        body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TodoTextField(
+                    controller: _controller,
+                    formKey: _formKey,
+                    hintText: context.loc.hint,
+                    emptyFieldText: context.loc.emptyField,
+                  ),
+                  ElevatedButton(
+                      style: TextButton.styleFrom(
+                          backgroundColor: Colors.blue,
+                          foregroundColor: Colors.white),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (state.editingTodoIndex != null) {
+                            Todo temp = state.todos[state.editingTodoIndex!];
+                            temp.name = _controller.text;
+                            context.read<TodosBloc>().add(TodoEdited(temp));
+                            _controller.clear();
+                          } else {
+                            context.read<TodosBloc>().add(TodoAdded(Todo(
+                                name: _controller.text, completed: false)));
+                            _controller.clear();
                           }
-                        },
-                        child: state.editingTodoIndex != null
-                            ? Text(context.loc.add)
-                            : Text(context.loc.add)),
-                    Expanded(
-                      child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                          itemCount: state.todos.length,
-                          separatorBuilder: (BuildContext context, int index) =>
-                              const Divider(),
-                          itemBuilder: (BuildContext context, int index) {
-                            return TodoItem(
-                              todo: state.todos[index],
-                              editTodoTapped: () {
-                                _controller.text = state.todos[index].name;
-                                context
-                                    .read<TodosBloc>()
-                                    .add(TodoReadyToEdit(state.todos[index]));
-                              },
-                              removeTodoTapped: () {
-                                context
-                                    .read<TodosBloc>()
-                                    .add(TodoRemoved(state.todos[index]));
-                                _controller.text = "";
-                              },
-                            );
-                          }),
-                    )
-                  ],
-                )),
+                          _checkTestDI();
+                        }
+                      },
+                      child: state.editingTodoIndex != null
+                          ? Text(context.loc.add)
+                          : Text(context.loc.add)),
+                  Expanded(
+                    child: ListView.separated(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        itemCount: state.todos.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            const Divider(),
+                        itemBuilder: (BuildContext context, int index) {
+                          return TodoItem(
+                            todo: state.todos[index],
+                            editTodoTapped: () {
+                              _controller.text = state.todos[index].name;
+                              context
+                                  .read<TodosBloc>()
+                                  .add(TodoReadyToEdit(state.todos[index]));
+                            },
+                            removeTodoTapped: () {
+                              context
+                                  .read<TodosBloc>()
+                                  .add(TodoRemoved(state.todos[index]));
+                              _controller.text = "";
+                            },
+                          );
+                        }
+                    ),
+                  )
+                ],
+        ),
       ),
     );
   }
